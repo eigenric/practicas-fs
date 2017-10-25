@@ -1,0 +1,17 @@
+#!/bin/bash
+# Titulo:       existe
+# Fecha:        19/10/2017
+# Autor:        Ricardo Ruiz
+# Version:      1.0
+# Descripción:  Comprueba si el primer argumento en un archivo plano
+#               y existe o si el segundo es un directorio
+# Opciones: ninguna
+# Uso: existe <ruta_relativa_posible_archivo> <ruta_absoluta_posible_directorio>
+
+if [ -f $1 ]; then
+    printf "El archivo $1 existe\n";
+elif [ -d $2 ]; then
+    printf "El archivo $1 no existe pero $2 es un directorio\n";
+else
+    printf "El archivo $1 no existe ni $2 es un directorio\n";
+fi
