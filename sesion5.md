@@ -143,3 +143,25 @@ Ej 4)
         echo "Uso ./ej6x4 <ene/1>"
     fi
 
+Ej 5)
+
+    (read -p "Propmpt: " VARIABLE)
+    (Y, con la opción -n1, no añade un \n)
+
+
+    #!/bin/bash
+    # Titulo:       ej6x5
+    # Fecha:        26/10/2017
+    # Autor:        Ricardo Ruiz
+    # Version:      1.0
+    # Descripción:  
+    #               
+    # Opciones: ninguna
+    # Uso: ./ej6x5.sh
+
+    num=0
+    while [ "$num" -lt 1 ] || [ "$num" -gt 10 ] ; 
+    do
+        read -p "Introducde un número entre 1 y 10: " num
+        echo $num
+    done
