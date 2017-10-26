@@ -8,14 +8,16 @@
 # Opciones: ninguna
 # Uso: ./ej6x3.sh
 
+shopt -s nocasematch # También valen las mayúsculas
+
 echo -n "Introduzca un caracter: "
 read caracter
 
 case $caracter in
-    [0-9]) fila=1;;
-    [QWERTYUIOP]) fila=2;;
-    [ASDFGHJKLÑ]) fila=3;;
-    [ZXCVBNM]) fila=4;;
+    [º0-9\'!]) fila=1;;
+    [qwertyuiop\`+]) fila=2;;
+    [asdfghjklñ´ç]) fila=3;;
+    [\<zxcvbnm,.-]) fila=4;;
     *) fila=0
 esac
 echo "El caracter $caracter está en la fila $fila"
