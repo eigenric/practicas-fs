@@ -1,0 +1,21 @@
+#!/bin/bash
+# Titulo:       lecturaypropio
+# Fecha:        19/10/2017
+# Autor:        Ricardo Ruiz
+# Version:      1.0
+# Descripción:  Comprueba si un archivo pertenece al usuario y 
+#               si este tiene permisos de lectura sobre él.
+# Opciones: ninguna
+# Uso: lecturaypropio <archivo>
+
+if [ -O $1 ]; then
+    echo "Eres el propietario del archivo $1";
+else
+    echo "No eres el propietario del archivo $1";
+fi
+
+if [ -r $1 ]; then
+    echo "Tienes permisos de lectura sobre el archivo $1";
+else
+    echo "No tienes permisos de lectura sobre el archivo $1";
+fi

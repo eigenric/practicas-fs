@@ -1,0 +1,10 @@
+#!/bin/bash
+
+declare -rx SCRIPT=${0##*/}
+
+if rm ${1}; then
+    printf "%s\n" "$SCRIPT: archivo temporal borrado"
+else
+    STATUS=177
+    printf "%s - código de finalización %d\n " "$SCRIPT:$LINENO no es posible borrar archivo" $STATUS
+fi

@@ -1,0 +1,25 @@
+#!/bin/bash
+# Titulo:       diasmultiplo
+# Fecha:        19/10/2017
+# Autor:        Ricardo Ruiz
+# Version:      1.0
+# Descripción:  Comprueba si el número de días restantes para fin de año
+#               el múltiplo de 5
+# Opciones: ninguna
+# Uso: diasmultiplo [-h]
+
+if [ "$1" == "-h" ]; then
+    echo "Este programa comprueba si el número de días restantes para \
+fin de año es múltiplo de 5."
+    echo "Para ejecutarlo simplemente ejecute ./diasmultiplo";
+else
+    dias_restantes=$[365 -$(date +%j)]
+    echo "Quedan $dias_restantes días para el fin de año."
+
+    if [ $[dias_restantes % 5] == 0 ]; then
+        echo "Y $dias_restantes es múltiplo de 5!";
+    else
+        echo "Pero $dias_restantes no es múltiplo de 5";
+    fi
+
+fi

@@ -1,0 +1,11 @@
+#!/bin/bash
+# Titulo:       numE
+# Fecha:        05/10/2017
+# Autor:        Ricardo Ruiz
+# Version:      1.0
+# Descripción:  Cuenta el número de archivos del directorio
+#               dado como primer argumento
+# Opciones: ninguna
+# Uso: numE directorio
+
+ls -1 $1 | wc -l

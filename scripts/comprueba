@@ -1,0 +1,16 @@
+#!/bin/bash
+# Titulo:       comprueba
+# Fecha:        19/10/2017
+# Autor:        Ricardo Ruiz
+# Version:      1.0
+# Descripción:  Comprueba si el archivo es plano y tienes
+#               permiso de ejecución sobre él o si es un enlace
+#               simbólico
+# Opciones: ninguna
+# Uso: comprueba <archivo>
+
+planoejecucion=`([ -x $1 ] && [ -f $1 ]) && echo "es" || echo "no es"`
+enlacesimbolico=`[ -h $1 ] && echo "es" || echo "no es"`
+
+echo "El archivo $1 $planoejecucion un archivo plano ejecutable"
+echo "El archivo $1 $enlacesimbolico un enlace simbólico"
