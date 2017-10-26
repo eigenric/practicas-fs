@@ -165,3 +165,34 @@ Ej 5)
         read -p "Introducde un número entre 1 y 10: " num
         echo $num
     done
+
+Ej 6)
+
+La variable $INTERVAL contiene el tiempo en segundos
+de giro. Esto funciona porque el programa duerme durante $INTERVAL
+segundos mediante la orden sleep en cada iteración del bucle
+infinito.
+
+Para conocer lo que raliza la opción -e de las órdenes echo del guión,
+podemos ejecutar:
+
+$ man echo | grep -- -e
+
+     -e     enable interpretation of backslash escapes
+
+    If -e is in effect, the following sequences are recognized:
+
+    \\     backslash
+
+    \a     alert (BEL)
+
+    \b     backspace
+
+    \c     produce no further output
+
+Lo que nos indica, que gracias a -e, echo puede interpretar
+cararacter como \b o \c
+
+Donde \b permite retroceder una posición en el cursor y
+\c hace que no se produzca salto de línea.
+
