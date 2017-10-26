@@ -1,0 +1,18 @@
+#!/bin/bash
+# Titulo:       compara
+# Fecha:        19/10/2017
+# Autor:        Ricardo Ruiz
+# Version:      1.0
+# Descripción:  Compara los dos argumentos dados
+# Opciones: ninguna
+# Uso: compara <num1> <num2>
+
+echo "El valor del primer parámetro es $1 y del segundo $2"
+
+let mayor="$1 > $2"
+let menor="$1 < $2"
+let iguales="$1 == $2"
+
+echo "¿$1 es mayor que $2?: $mayor"
+echo "¿$1 es menor que $2?: $menor"
+echo "¿$1 es igual que $2?: $iguales"
