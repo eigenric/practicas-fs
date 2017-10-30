@@ -1,7 +1,12 @@
 # Práctica 5: expresiones con variable y expresiones regulares
 
-
 ## Ejercicio 1
+
+**Utilizando una variable que contenga el valor entero 365 y otra que guarde el número del día actual
+del año en curso, realice la misma operación del ejemplo anterior usando cada una de las diversas formas de
+cálculo comentadas hasta el momento, es decir, utilizando `expr`, `$(( ... ))` y `$[ ... ]`.**
+
+
 
 Primero declaramos las dos variables mediante el comando
 declare.
@@ -21,6 +26,22 @@ $ echo "Faltan $[(dias_anio-dia_actual)/7] semanas hasta el fin de año"
 Nótese que son necesarios los dobles paréntesis en la expresión $(()),
 y que ninguno de los casos es necesario preceder el nombre de las
 variables con $.
+
+
+## Ejercicio 2
+
+
+**Realice las siguientes operaciones para conocer el funcionamiento del operador de incremento
+como sufijo y como prefijo. Razone el resultado obtenido en cada una de ellas:**
+
+```console
+$ v=1
+$ echo $v
+$ echo $((v++))
+$ echo $v
+$ echo $((++v))
+$ echo $v
+```
 
 ```console
 $ v=1
@@ -75,6 +96,14 @@ cambio desde el último incremento.
 
 ## Ejercicio 3
 
+**Utilizando el operador de división, ponga un caso concreto donde se aprecie que la asignación
+abreviada es equivalente a la asignación completa, es decir, que x/=y equivale a x=x/y.
+En el resultado del cálculo de expresiones aritméticas, bash solamente trabaja con números enteros, por lo que si
+se necesitase calcular un resultado con decimales, habría que utilizar una forma alternativa, como puede ser la
+ofrecida por la orden `bc` , cuya opción `- l` , letra “ele”, permite hacer algunos cálculos matemáticos (admite otras
+posibilidades que pueden verse mediante `man`).**
+
+
 Utilizando la asignación completa
 
 ```console
@@ -101,6 +130,11 @@ Lo que muestra que son equivalentes.
 
 # Ejercicio 4
 
+**Compruebe qué ocurre si en el ejemplo anterior utiliza comillas dobles o simples para acotar todo lo
+que sigue a la orden `echo`. ¿Qué sucede si se acota entre comillas dobles solamente la expresión aritmética que se
+quiere calcular?, ¿y si se usan comillas simples?**
+
+
 ```console
 $ echo "6/5 | bc -l"
 6/5 | bc -l
@@ -122,6 +156,13 @@ la expresión aritmetica, el resultado 6/5 es pasado mediante
 el cauce a la orden `bc -l`.
 
 # Ejercicio 5
+
+
+**Calcule con decimales el resultado de la expresión aritmética (3-2)/5. Escriba todas las
+expresiones que haya probado hasta dar con una respuesta válida. Utilizando una solución válida, compruebe qué
+sucede cuando la expresión aritmética se acota entre comillas dobles; ¿qué ocurre si se usan comillas simples?, ¿y
+si se ponen apóstrofos inversos?**
+
 
 Probando como en el ejercicio anterior:
 
@@ -175,6 +216,9 @@ evaluar debido a la falta de `$(())` o `$[]`.
 
 ## Ejercicio 6
 
+**Consulte la sintaxis completa de la orden `let` utilizando la orden de ayuda para las órdenes
+empotradas ( `help let`) y tome nota de su sintaxis general.**
+
 `let arg [arg ...]`
 
 Evalúa cada ARG como una expresión aritmética.  La evaluación se hace
@@ -184,6 +228,12 @@ lista de operadores está agrupada en niveles de operadores de la misma
 prioridad.  Se muestran los niveles en orden de prioridad decreciente.
 
 ## Ejercicio 7
+
+**Al realizar el ejercicio anterior habrá observado que la orden `let` admite asignaciones múltiples y
+operadores que nosotros no hemos mencionado anteriormente. Ponga un ejemplo de asignación múltiple y, por
+otra parte, copie en un archivo el orden en el que se evalúan los operadores que admite.**
+
+
 
 ```console
 $ let a=1,b=2
@@ -217,6 +267,13 @@ El orden en el se que se evalúan los operadores:
 ```
 
 ## Ejercicio 8
+
+
+**Haciendo uso de las órdenes conocidas hasta el momento, construya un guion que admita dos
+parámetros, que compare por separado si el primer parámetro que se le pasa es igual al segundo, o es menor, o es
+mayor, y que informe tanto del valor de cada uno de los parámetros como del resultado de cada una de las
+evaluaciones mostrando un 0 o un 1 según corresponda.**
+
 
 Script compara
 
@@ -271,6 +328,14 @@ El valor del primer parámetro es 1 y del segundo 1
 
 # Ejercicio 9
 
+
+**Usando `test` , construya un guion que admita como parámetro un nombre de archivo y realice las
+siguientes acciones: asignar a una variable el resultado de comprobar si el archivo dado como parámetro es plano
+y tiene permiso de ejecución sobre él; asignar a otra variable el resultado de comprobar si el archivo es un enlace
+simbólico; mostrar el valor de las dos variables anteriores con un mensaje que aclare su significado. Pruebe el
+guion ejecutándolo con /bin/cat y también con /bin/rnano.**
+
+
 ```bash
 #!/bin/bash
 # Titulo:       comprueba
@@ -310,7 +375,13 @@ El archivo /bin/rnano es un enlace simbólico
 
 Ejercicio 5.10)
 
-test puede operar con strings:
+
+**Ejecute `help test` y anote qué otros operadores se pueden utilizar con la orden `test` y para
+qué sirven. Ponga un ejemplo de uso de la orden `test` comparando dos expresiones aritméticas y otro
+comparando dos cadenas de caracteres.**
+
+`test` puede operar con strings:
+
 ```console
     String operators:
     
@@ -348,7 +419,10 @@ $ echo `[ 3 -ge 2 ] && echo "3 es mayor que 2"`
 
 ## Ejercicio 11
 
-a) 
+
+**Responda a los siguientes apartados:**
+
+**a) Razone qué hace la siguiente orden:**
 
 ```console
 $ if [ -f ./sesion5.pdf ]; then printf "El archivo ./sesion5.pdf existe"; fi
@@ -359,7 +433,11 @@ Esta orden imprime por pantalla que el archivo sesion5.pdf del directorio
 donde es ejecutada la orden existe, si este, además de existir, es un archivo
 plano `(-f)`
 
-b)
+
+**b) Añada los cambios necesarios en la orden anterior para que también muestre un mensaje de aviso en caso
+de no existir el archivo. (Recuerde que, para escribir de forma legible una orden que ocupe más de una
+línea, puede utilizar el carácter “ \ ” como final de cada línea que no sea la última.)**
+
 
 Para mostrar un mensaje en caso de que el archivo no exista:
 
@@ -368,7 +446,11 @@ $ if [ -f ./sesion5.pdf ]; then printf "El archivo ./sesion5.pdf existe\n"; \
   else printf "\n\nEl archivo ./sesion5.pdf no existe"; fi
 ```
 
-c)
+**c) Sobre la solución anterior, añada un bloque elif para que, cuando no exista el archivo ./sesion5.pdf,
+compruebe si el archivo /bin es un directorio. Ponga los mensajes adecuados para conocer el resultado
+en cada caso posible.**
+
+
 
 ```console
 $ if [ -f ./sesion5.pdf ]; then printf "El archivo ./sesion5.pdf existe\n"; \
@@ -379,8 +461,10 @@ directorio"; fi
 /bin es un directorio
 ```
 
+**d) Usando como base la solución del apartado anterior, construya un guion que sea capaz de hacer lo mismo
+pero admitiendo como parámetros la ruta relativa del primer archivo a buscar y la ruta absoluta del
+segundo. Pruébelo con los dos archivos del apartado anterior.**
 
-d)
 
 ```bash
 #!/bin/bash
@@ -420,6 +504,10 @@ El archivo ./co no existe ni /bon es un directorio
 
 ## Ejercicio 12
 
+**Construya un guion que admita como argumento el nombre de un archivo o directorio y que
+permita saber si somos el propietario del archivo y si tenemos permiso de lectura sobre él.**
+
+
 La opción `-O` de `test`nos permite conocer si el archivo pertenece al usuario.
 Y la opción `-r` de `test` permite conocer si podemos leer el archivo.
 
@@ -457,6 +545,11 @@ Eres el propietario del archivo ca
 Tienes permisos de lectura sobre el archivo ca
 
 ## Ejercicio 13
+
+**Escriba un guion que calcule si el número de días que faltan hasta fin de año es múltiplo de cinco
+o no, y que comunique el resultado de la evaluación. Modifique el guion anterior para que admita la opción -h de
+manera que, al ejecutarlo con esa opción, muestre información de para qué sirve el guion y cómo debe ejecutarse.**
+
 
 ```bash
 #!/bin/bash
@@ -501,11 +594,22 @@ Pero 73 no es múltiplo de 5
 
 ## Ejercicio 14
 
+
+**¿Qué pasa en el ejemplo anterior si eliminamos la redirección de la orden `if`?**
+
+
 Lo que ocurre al eliminar la redirección del if es que, en caso de error,
 se mostrará tanto nuestro mensaje propio como el error de la propia orden rm.
 
 
 ## Ejercicio 15
+
+
+**Haciendo uso del mecanismo de cauces y de la orden **echo** , construya un guion que admita un
+argumento y que informe si el argumento dado es una única letra, en mayúsculas o en minúsculas, o es algo
+distinto de una única letra.**
+
+
 
 ```bash
 #!/bin/bash
@@ -528,4 +632,10 @@ fi 2> /dev/null
 
 ## Ejercicio 16
 
+**Haciendo uso de expresiones regulares, escriba una orden que permita buscar en el árbol de
+directorios los nombres de los archivos que contengan al menos un dígito y la letra e. ¿Cómo sería la orden si
+quisiéramos obtener los nombres de los archivos que tengan la letra e y no contengan ni el 0 ni el 1?**
+
 ## Ejercicio 17
+
+**Utilizando la orden `grep` , exprese una forma alternativa de realizar lo mismo que con `wc -l`.**
