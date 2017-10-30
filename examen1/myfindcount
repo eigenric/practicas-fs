@@ -1,0 +1,34 @@
+#!/bin/bash
+# Titulo:       myfindcount
+# Fecha:        28/10/2017
+# Autor:        Ricardo Ruiz
+# Version:      1.0
+# Descripción:  
+#              
+#             
+# Opciones: ninguna
+# Uso: ./myfindcount <archivo>
+
+function _usage() {
+    echo "Uso $0 [directorio] <expresion-regular>"
+    echo "Nótese que en caso de omision <directorio> sera el actual"
+}
+
+function _count_files() {
+    if [ ! "$1" = "." ] && [ ! -d $1 ] ; then
+        echo "$1 debe ser un directorio"
+        _usage && exit 1;
+    fi
+    find $1 -name "$2" | wc -l;
+}
+
+function _argument_error() {
+    echo "Debe aportar 1 o 2 argumento, no $1";
+    _usage;
+}
+
+case $# in
+    1) _count_files . $1;;
+    2) _count_files $1 $2;;
+    *)  _argument_error $#;
+esac

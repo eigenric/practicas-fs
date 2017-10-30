@@ -1,0 +1,44 @@
+#!/bin/bash
+# Titulo:       ejercicio4
+# Fecha:        28/10/2017
+# Autor:        Ricardo Ruiz
+# Version:      1.0
+# Descripción:  Comprueba si un archivo pertenece al usuario y 
+#               si tiene permisos de escritura
+#               y si tiene permisos de ejecución
+# Opciones: ninguna
+# Uso: ./ejercicio4 <archivo>
+
+
+if [ $# == 1 ]; then
+    if [ -f $1 ]; then 
+
+        if [ -O $1 ]; then
+            echo "Eres el propietario del archivo $1";
+        else
+            echo "No eres el propietario del archivo $1";
+        fi
+
+        if [ -w $1 ]; then
+            echo "Tienes permisos de escritura sobre el archivo $1";
+        else
+            echo "No tienes permisos de escritura sobre el archivo $1";
+        fi
+
+        if [ -x $1 ]; then
+            echo "Tienes permisos de ejecución sobre el archivo $1";
+        else
+            echo "No tienes permisos de ejecución sobre el archivo $1";
+        fi
+
+    else
+        echo "$1 no es un archivo existente";
+        if [ -d $1 ]; then
+            echo "De hecho $1 es un directorio";
+        fi
+        exit 1
+    fi
+else
+    echo "Se admite únicamente un parámetro";
+    echo "Uso ./ejercicio4 <archivo>";
+fi
