@@ -230,43 +230,86 @@ $ ls -l {sa,se,ad}*
 $ ls -l t*r`
 ```
 
-**Ejercicio 2. 8. Liste todos los archivos que comiencen por `tem` y terminen por `.gz` o `.zip`**
-
 ## Ejercicio 2.8
 
-a) `ls -l ~/tem*.{gz,zip}`
+**Liste todos los archivos que comiencen por `tem` y terminen por `.gz` o `.zip`**
 
-b) `ls -l *.{gz,zip}`
+**a) De tu directorio HOME.**
 
-c) En los dos casos, no existe ningun archivo archivo terminado en `.gz` o `.zip`
+```console
+$ ls -l ~/tem*.{gz,zip}
+```
+
+**b) Del directorio actual.**
+
+```console
+ls -l *.{gz,zip}
+```
+
+**c) ¿Hay alguna diferencia en el resultado de su ejecución? Razone la respuesta.**
+
+En los dos casos, no existe ningun archivo archivo terminado en `.gz` o `.zip`
 
 ## Ejercicio 2.9
 
-a) `head hosts`
 
-b) `tail -n 5 hosts`
+**Muestre del contenido de un archivo regular que contenga texto:**
 
-c) Si el archivo ejemplo contiene:
+**a) Las 10 primeras líneas.**
 
+```console
+$ head hosts
+```
+
+**b) Las 5 últimas líneas.**
+
+```console
+$ tail -n 5 hosts
+```
+
+
+## Ejercicio 10
+
+**Ordene el contenido de un archivo de texto según diversos criterios de ordenación.**
+
+Si el archivo ejemplo contiene:
+
+```
 AEJEMPLO
 dejemplo
 Bejemplo
 cejemplo
+```
 
-Ejecutando `sort ejemplo`:
+Ejecutamos
+
+```console
+$ sort ejemplo
 
 AEJEMPLO
 Bejemplo
 cejemplo
 dejemplo
+```
 
-Ejecutando `sort --reverse ejemplo`
+Ahora:
+
+```console
+$ sort --reverse ejemplo
 
 dejemplo
 cejemplo
 Bejemplo
 AEJEMPLO
+```
 
-Como se puede comprobar, se invierte el orden de los elementos alfabéticamente.
+Como se puede comprobar, se invierte el orden de los elementos
+alfabéticamente.
 
-d) `cat *.{txt,c}`
+
+## Ejercicio 11
+**¿Cómo podría ver el contenido de todos los archivos del directorio actual que terminen en `.txt` o `.c`?**
+
+```console
+$ cat *.{txt,c}
+```
