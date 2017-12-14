@@ -1,7 +1,6 @@
 # Practica 9
 
 ## Ejercicio 1
-
 **Compile los archivos main.cpp factorial.cpp hello.cpp y genere un ejecutable con el
 nombre ejemplo1. Lance gdb con dicho ejemplo y ejecútelo dentro del depurador. Describa la información que
 ofrece.**
@@ -13,7 +12,7 @@ $ gdb ejemplo1
 
 Dentro del intérprete
 
-```console
+```
 (gdb) run
 
 Starting program: /home/ricardo/Dropbox/dgiim/FS/Prácticas/practicas-fs/ArchivosModuloII/sesion09/ejemplo1 
@@ -29,7 +28,7 @@ Lo cual nos indica que el programa ha terminado correctamente la ejecución.
 **Usando la orden list muestre el código del programa principal y el de la función factorial
 utilizados en el ejercicio 1 (para ello utilice la orden help list).**
 
-```GDB
+```
 (gdb) list 1,12
 1	#include <iostream>
 2	#include "functions.h"
@@ -62,6 +61,148 @@ aparezca el comentario /* break */. Muestre información de todas las variables 
 que en la depuración se detenga la ejecución. Muestre la información del contador de programa mediante $pc y el
 de la pila con $sp.**
 
+En primer lugar compilamos el programa añadiendo la opción `-g`, y ejecutamos el depurador
+
+```console
+$ g++ -g mainsesion09a.cpp -o mainsesion09
+$ gdb mainsesion09
+```
+Listamos el código,
+
+```
+(gdb) list 1,55
+1	#include <iostream>
+2	/*
+3	 Este programa trata mantener dos variables, la primera 
+4	 realiza la multiplicación de valores.
+5	 La segunda ...
+6	*/
+7	
+8	/* Incrementa en 2 una variable */
+9	int cuenta (int y)
+10	{
+11	   int tmp;
+12	
+13	   tmp = y + 2; 
+14	
+15	   /* break */
+16	
+17	   return tmp;
+18	}
+19	
+20	/* Calcula la multiplicación de dos números */
+21	int multiplica (int x, int y)
+22	{
+23	   int final;
+24	   int i;
+25	
+26	   final = 0;
+27	   for (i = 0; i < x; i ++)
+28	   {
+29	      /* break */
+30	      final = final + y;
+31	   }
+32	
+33	   return final;
+34	}
+35	
+36	int main (void)
+37	{
+38	   int final1;
+39	   int final2;
+```
+
+y encontramos que hay cuatro comentarios break, en las líneas 15,29,42,47
+
+Por tanto, ejecutamos la orden `break` junto con los números de línea correspondientes:
+
+```
+(gdb) break 15
+Punto de interrupción 1 at 0x4007c6: file mainsesion09a.cpp, line 15.
+(gdb) break 29
+Punto de interrupción 2 at 0x4007eb: file mainsesion09a.cpp, line 29.
+(gdb) break 42
+Punto de interrupción 3 at 0x400804: file mainsesion09a.cpp, line 42.
+(gdb) break 47
+Punto de interrupción 4 at 0x400823: file mainsesion09a.cpp, line 47.
+```
+
+Ejecutamos el programa
+
+```
+(gdb) run
+
+Starting program: /home/ricardo/Dropbox/dgiim/FS/Prácticas/practicas-fs/ArchivosModuloII/sesion09/mainsesion09a 
+
+Breakpoint 3, main () at mainsesion09a.cpp:43
+43	   final1 = multiplica(3, 2);
+
+(gdb) info locals
+final1 = 0
+final2 = 0
+i = 32767
+```
+
+Mostramos el contador de programa usando su dirección
+lógica, y la siguiente instrucción que se ejecutará
+
+```
+(gdb) p/x $pc
+$1 = 0x400804
+(gdb) x/i $pc
+=> 0x400804 <main()+8>:	mov    $0x2,%esi
+```
+Mostramos el contador de programa usando su dirección
+lógica, y la siguiente instrucción que se ejecutará
+
+Mostramos la pila de programa usando su dirección
+lógica
+
+```
+(gdb) p/x $sp
+$2 = 0x7fffffffdc10
+```
+
+Ejecutamos la orden `next` para ejecutar hasta el siguiente breakpoint,
+y repetimos el proceso:
+
+```
+(gdb) next
+(gdb) info locals
+final = 0
+i = 0
+(gdb) p/x $pc
+$3 = 0x4007eb
+(gdb) x/i $pc
+=> 0x4007eb <multiplica(int, int)+32>:	mov    -0x18(%rbp),%eax
+(gdb) p/x $sp
+$4 = 0x7fffffffdc00
+(gdb) x/i $sp
+   0x7fffffffdc00:	and    %bl,%ah
+
+(gdb) next
+27	   for (i = 0; i < x; i ++)
+(gdb) info locals
+final = 2
+i = 0
+(gdb) p/x $pc
+$5 = 0x4007f1
+(gdb) x/i $pc
+=> 0x4007f1 <multiplica(int, int)+38>:	addl   $0x1,-0x4(%rbp)
+(gdb) p/x $sp
+$6 = 0x7fffffffdc00
+(gdb) x/i $sp
+   0x7fffffffdc00:	and    %bl,%ah
+(gdb) p/x $sp
+$7 = 0x7fffffffdc00
+
+(gdb) next
+Breakpoint 2, multiplica (x=3, y=2) at mainsesion09a.cpp:30
+30	      final = final + y;
+(gdb) info locals
+final = 2
+i = 1
+```
 
 ## Ejercicio 4
 
@@ -69,6 +210,61 @@ de la pila con $sp.**
 generado en el ejercicio anterior en los puntos de ruptura correspondientes tras un par de iteraciones en el bucle
 for. Indique la orden para obtener el código ensamblador de la zona depurada.**
 
+```
+(gdb) break 47
+Punto de interrupción 1 at 0x400823: file mainsesion09a.cpp, line 47.
+(gdb) run
+Starting program: /home/ricardo/Dropbox/dgiim/FS/Prácticas/practicas-fs/ArchivosModuloII/sesion09/mainsesion09a 
+
+Breakpoint 1, main () at mainsesion09a.cpp:48
+48	      final2 = cuenta(i);
+(gdb) continue
+Continuando.
+
+Breakpoint 1, main () at mainsesion09a.cpp:48
+48	      final2 = cuenta(i);
+(gdb) continue
+Continuando.
+
+Breakpoint 1, main () at mainsesion09a.cpp:48
+48	      final2 = cuenta(i);
+(gdb) info locals
+final1 = 6
+final2 = 3
+i = 2
+(gdb) dis
+disable      disassemble  disconnect   display      
+(gdb) disassemble
+Dump of assembler code for function main():
+   0x00000000004007fc <+0>:	push   %rbp
+   0x00000000004007fd <+1>:	mov    %rsp,%rbp
+   0x0000000000400800 <+4>:	sub    $0x10,%rsp
+   0x0000000000400804 <+8>:	mov    $0x2,%esi
+   0x0000000000400809 <+13>:	mov    $0x3,%edi
+   0x000000000040080e <+18>:	callq  0x4007cb <multiplica(int, int)>
+   0x0000000000400813 <+23>:	mov    %eax,-0x8(%rbp)
+   0x0000000000400816 <+26>:	movl   $0x0,-0xc(%rbp)
+   0x000000000040081d <+33>:	cmpl   $0x63,-0xc(%rbp)
+   0x0000000000400821 <+37>:	jg     0x400836 <main()+58>
+=> 0x0000000000400823 <+39>:	mov    -0xc(%rbp),%eax
+   0x0000000000400826 <+42>:	mov    %eax,%edi
+   0x0000000000400828 <+44>:	callq  0x4007b6 <cuenta(int)>
+   0x000000000040082d <+49>:	mov    %eax,-0x4(%rbp)
+   0x0000000000400830 <+52>:	addl   $0x1,-0xc(%rbp)
+   0x0000000000400834 <+56>:	jmp    0x40081d <main()+33>
+   0x0000000000400836 <+58>:	mov    -0x8(%rbp),%eax
+   0x0000000000400839 <+61>:	mov    %eax,%esi
+   0x000000000040083b <+63>:	mov    $0x601060,%edi
+   0x0000000000400840 <+68>:	callq  0x400650 <_ZNSolsEi@plt>
+   0x0000000000400845 <+73>:	mov    $0x400934,%esi
+   0x000000000040084a <+78>:	mov    %rax,%rdi
+   0x000000000040084d <+81>:	callq  0x4006a0 <_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc@plt>
+   0x0000000000400852 <+86>:	mov    $0x0,%eax
+   0x0000000000400857 <+91>:	leaveq 
+   0x0000000000400858 <+92>:	retq   
+End of assembler dump.
+(gdb) 
+```
 
 ## Ejercicio 5
 
@@ -76,11 +272,65 @@ for. Indique la orden para obtener el código ensamblador de la zona depurada.**
 primero.**
 
 
+```
+(gdb) break 15
+Punto de interrupción 1 at 0x4007c6: file mainsesion09a.cpp, line 15.
+(gdb) break 29
+Punto de interrupción 2 at 0x4007eb: file mainsesion09a.cpp, line 29.
+(gdb) break 42
+Punto de interrupción 3 at 0x400804: file mainsesion09a.cpp, line 42.
+(gdb) break 47
+Punto de interrupción 4 at 0x400823: file mainsesion09a.cpp, line 47.
+(gdb) info breakpoints
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x00000000004007c6 in cuenta(int) at mainsesion09a.cpp:15
+2       breakpoint     keep y   0x00000000004007eb in multiplica(int, int) at mainsesion09a.cpp:29
+3       breakpoint     keep y   0x0000000000400804 in main() at mainsesion09a.cpp:42
+4       breakpoint     keep y   0x0000000000400823 in main() at mainsesion09a.cpp:47
+(gdb) help delete breakpoints
+Borra algunos puntos de interrupción o muestra automáticamente expresiones.
+Los argumentos son números de puntos de interrupción separados por espacios.
+Para borrar todos los puntos de interrupción, no proporciones argumentos.
+Esta orden puede abreviarse como «delete».
+(gdb) delete breakpoints 2 3 4
+(gdb) info breakpoints
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x00000000004007c6 in cuenta(int) at mainsesion09a.cpp:15
+(gdb) 
+```
+
 ## Ejercicio 6
 
 **Realice las acciones del ejercicio 3 y las del ejercicio 5 en un guion y ejecútelas de nuevo mediante
 la opción -x de gdb. ¿Sabría decir qué hace este programa con la variable final2?**
 
+```
+/* guion.gdb */
+
+break 15
+run
+info locals
+p/x $pc
+x/i $pc
+p/x $ps
+x/i $ps
+break 29
+n
+info locals
+p/x $pc
+x/i $pc
+p/x $ps
+x/i $ps
+break 42
+n
+info locals
+p/x $pc
+x/i $pc
+p/x $ps
+x/i $ps
+break 47
+delete breakpoint 2 3 4
+```
 
 ## Ejercicio 7
 
@@ -97,6 +347,8 @@ el ejemplo anterior o mediante el número de línea donde aparezca la llamada a 
 ejecución con step y otros 10 con next. Comente las diferencias.
 Con down o up podemos elegir subir o bajar en la pila de marcos, de tal forma que podemos ir a la función más
 interna o subir a donde se hizo la última llamada a dicha función.**
+
+Este programa no se encuentra dentro de los Archivos del Módulo II de Prado.
 
 ## Ejercicio 9
 
@@ -128,3 +380,4 @@ posteriormente se pueda continuar su ejecución. Escriba todos los pasos que hay
 
 **Utilizando las órdenes de depuración de gdb, corrija el error del programa
 ecuacionSegundoGrado.cpp. Escriba todos los pasos que haya realizado. Pruebe a depurarlo usando attach.**
+
