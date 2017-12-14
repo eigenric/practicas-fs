@@ -1,6 +1,7 @@
 # Practica 9
 
 ## Ejercicio 1
+
 **Compile los archivos main.cpp factorial.cpp hello.cpp y genere un ejecutable con el
 nombre ejemplo1. Lance gdb con dicho ejemplo y ejecútelo dentro del depurador. Describa la información que
 ofrece.**
@@ -338,6 +339,94 @@ delete breakpoint 2 3 4
 ejsesion09.cpp. Utilizando gdb, trate de averiguar qué sucede y por qué no funciona. Intente arreglar el
 programa.**
 
+````
+(gdb) list
+21	{
+22	   int i;
+23	   int tmp;
+24	
+25	   tmp = 0;
+26	   for (i = 0; i < n; i ++)
+27	      suma(tmp, vector[i]);
+28	
+29	   printf ("Suma = %d\n", tmp);
+30	
+(gdb) break 27
+Punto de interrupción 1 at 0x4005d5: file ejsesion09a.cpp, line 27.
+(gdb) run
+Starting program: /home/ricardo/Dropbox/dgiim/FS/Prácticas/practicas-fs/ArchivosModuloII/sesion09/ejsesion09 
+
+Breakpoint 1, sumatoria (vector=0x7fffffffdbe0, n=17) at ejsesion09a.cpp:27
+27	      suma(tmp, vector[i]);
+(gdb) info locals
+i = 0
+tmp = 0
+(gdb) continue
+Continuando.
+
+Breakpoint 1, sumatoria (vector=0x7fffffffdbe0, n=17) at ejsesion09a.cpp:27
+27	      suma(tmp, vector[i]);
+(gdb) info locals
+i = 1
+tmp = 0
+(gdb) continue
+Continuando.
+
+Breakpoint 1, sumatoria (vector=0x7fffffffdbe0, n=17) at ejsesion09a.cpp:27
+27	      suma(tmp, vector[i]);
+(gdb) info locals
+i = 2
+tmp = 0
+```
+
+Como podemos observar, la variable tmp permanece constante
+pues no se le asigna el valor devuelto por la función suma().
+
+```
+#include <stdlib.h>
+#include <stdio.h>
+/*
+ Este programa trata de sumar una lista de números.
+ La lista de números aparece en la variable "vector" y el resultado
+ se almacena en la variable "final".
+*/
+
+/* Suma dos números entre sí */
+int suma (int x, int y)
+{
+   int tmp;
+
+   tmp = x + y; 
+
+   return tmp;
+}
+
+/* Realiza la sumatoria de un vector */
+int sumatoria (float vector[], int n)
+{
+   int i;
+   int tmp;
+
+   tmp = 0;
+   for (i = 0; i < n; i ++)
+      tmp = suma(tmp, vector[i]); // Almacenamos en tmp
+
+   printf ("Suma = %d\n", tmp);
+
+   return tmp;
+}
+
+int main (void)
+{
+   float final;
+   float vector[] = {0, 1, 2.3, 3.7, 4.10, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4};
+
+   final = sumatoria(vector, 15); // El parámetro debe ser el tamaño del vector
+
+   return 0;
+}
+```
+
 ## Ejercicio 8
 
 **Compile el programa mainsesion10.cpp y genere un ejecutable con el nombre ejemplo10.1.
@@ -348,7 +437,79 @@ ejecución con step y otros 10 con next. Comente las diferencias.
 Con down o up podemos elegir subir o bajar en la pila de marcos, de tal forma que podemos ir a la función más
 interna o subir a donde se hizo la última llamada a dicha función.**
 
-Este programa no se encuentra dentro de los Archivos del Módulo II de Prado.
+Interpretando que el archivo `mainsesion10.cpp` se corresponde con `mainsesion09b.cpp`,
+
+```
+(gdb) break 47
+Punto de interrupción 1 at 0x400823: file mainsesion09b.cpp, line 47.
+(gdb) run
+Starting program: /home/ricardo/Dropbox/dgiim/FS/Prácticas/practicas-fs/ArchivosModuloII/sesion09/mainsesion09b 
+
+Breakpoint 1, main () at mainsesion09b.cpp:48
+48	      final2 = cuenta(i);
+(gdb) s
+cuenta (y=0) at mainsesion09b.cpp:13
+13	   tmp = y + 2; 
+(gdb) s
+17	   return tmp;
+(gdb) s
+18	}
+(gdb) s
+main () at mainsesion09b.cpp:46
+46	   for (i = 0; i < 100; i ++)
+(gdb) s
+
+Breakpoint 1, main () at mainsesion09b.cpp:48
+48	      final2 = cuenta(i);
+(gdb) s
+cuenta (y=1) at mainsesion09b.cpp:13
+13	   tmp = y + 2; 
+(gdb) s
+17	   return tmp;
+(gdb) s
+18	}
+(gdb) s
+main () at mainsesion09b.cpp:46
+46	   for (i = 0; i < 100; i ++)
+(gdb) s
+
+Breakpoint 1, main () at mainsesion09b.cpp:48
+48	      final2 = cuenta(i);
+(gdb) n
+46	   for (i = 0; i < 100; i ++)
+(gdb) n
+
+Breakpoint 1, main () at mainsesion09b.cpp:48
+48	      final2 = cuenta(i);
+(gdb) n
+46	   for (i = 0; i < 100; i ++)
+(gdb) n
+
+Breakpoint 1, main () at mainsesion09b.cpp:48
+48	      final2 = cuenta(i);
+(gdb) n
+46	   for (i = 0; i < 100; i ++)
+(gdb) n
+
+Breakpoint 1, main () at mainsesion09b.cpp:48
+48	      final2 = cuenta(i);
+(gdb) n
+46	   for (i = 0; i < 100; i ++)
+(gdb) n
+
+Breakpoint 1, main () at mainsesion09b.cpp:48
+48	      final2 = cuenta(i);
+(gdb) n
+46	   for (i = 0; i < 100; i ++)
+(gdb) n
+
+Breakpoint 1, main () at mainsesion09b.cpp:48
+48	      final2 = cuenta(i);
+(gdb) 
+```
+Como se puede observar, la orden `next` ejecuta la siguiente linea del programa sin
+entrar en cada una de las líneas de una función mientras que `step` ejecuta
+una a una las instrucciones de la función.
 
 ## Ejercicio 9
 
@@ -356,6 +517,50 @@ Este programa no se encuentra dentro de los Archivos del Módulo II de Prado.
 función cuenta. Usando la orden info frame, muestre la información del marco actual y del marco superior;
 vuelva al marco inicial y compruebe si ha cambiado algo.**
 
+```
+(gdb) break cuenta
+Punto de interrupción 1 at 0x4007bd: file mainsesion09b.cpp, line 13.
+(gdb) run
+Starting program: /home/ricardo/Dropbox/dgiim/FS/Prácticas/practicas-fs/ArchivosModuloII/sesion09/mainsesion09b 
+
+Breakpoint 1, cuenta (y=0) at mainsesion09b.cpp:13
+13	   tmp = y + 2; 
+(gdb) info frame
+Stack level 0, frame at 0x7fffffffdc10:
+ rip = 0x4007bd in cuenta (mainsesion09b.cpp:13); saved rip = 0x40082d
+ called by frame at 0x7fffffffdc30
+ source language c++.
+ Arglist at 0x7fffffffdc00, args: y=0
+ Locals at 0x7fffffffdc00, Previous frame's sp is 0x7fffffffdc10
+ Saved registers:
+  rbp at 0x7fffffffdc00, rip at 0x7fffffffdc08
+(gdb) up
+#1  0x000000000040082d in main () at mainsesion09b.cpp:48
+48	      final2 = cuenta(i);
+(gdb) info frame
+Stack level 1, frame at 0x7fffffffdc30:
+ rip = 0x40082d in main (mainsesion09b.cpp:48); saved rip = 0x7ffff76ab830
+ caller of frame at 0x7fffffffdc10
+ source language c++.
+ Arglist at 0x7fffffffdc20, args: 
+ Locals at 0x7fffffffdc20, Previous frame's sp is 0x7fffffffdc30
+ Saved registers:
+  rbp at 0x7fffffffdc20, rip at 0x7fffffffdc28
+(gdb) down
+#0  cuenta (y=0) at mainsesion09b.cpp:13
+13	   tmp = y + 2; 
+(gdb) info frame
+Stack level 0, frame at 0x7fffffffdc10:
+ rip = 0x4007bd in cuenta (mainsesion09b.cpp:13); saved rip = 0x40082d
+ called by frame at 0x7fffffffdc30
+ source language c++.
+ Arglist at 0x7fffffffdc00, args: y=0
+ Locals at 0x7fffffffdc00, Previous frame's sp is 0x7fffffffdc10
+ Saved registers:
+  rbp at 0x7fffffffdc00, rip at 0x7fffffffdc08
+(gdb) 
+```
+No, no ha cambiado nada de información.
 
 ## Ejercicio 10
 
@@ -363,10 +568,49 @@ vuelva al marco inicial y compruebe si ha cambiado algo.**
 el programa se detenga cuando la variable final tenga como valor 8. Compruebe si se detiene o no y explique
 por qué.**
 
+```
+(gdb) break if final == 8
+```
+
+No se detiene debido a que la función multiplica es llamada con argumentos `x=3` e `y=2`, y este
+es el que fija el número de repeticiones del bucle, y por tanto el valor máximo que alcanza
+`final` es 6.
+
 ## Ejercicio 11
 
 **Pruebe el ejemplo anterior, ejecute después un continue y muestre el valor de la variable tmp.
 Todo haría indicar que el valor debiera ser 12 y sin embargo no es así, explique por qué.**
+
+
+```
+(gdb) break 10
+Punto de interrupción 1 at 0x4007bd: file mainsesion09b.cpp, line 10.
+(gdb) run
+Starting program: /home/ricardo/Dropbox/dgiim/FS/Prácticas/practicas-fs/ArchivosModuloII/sesion09/mainsesion09b 
+ 
+Breakpoint 1, cuenta (y=0) at mainsesion09b.cpp:13
+13	   tmp = y + 2; 
+(gdb) print tmp
+$1 = 3
+(gdb) set variable tmp=10
+(gdb) print tmp
+$2 = 10
+(gdb) continue
+Continuando.
+
+Breakpoint 1, cuenta (y=1) at mainsesion09b.cpp:13
+13	   tmp = y + 2; 
+(gdb) print tmp
+$3 = 2
+(gdb) 
+```
+
+`tmp` es una variable local de la función cuenta. Por tanto,
+cada vez que se llama a la función se reinicializa a `y+2` donde
+`y` es un parámetro de la función. Por tanto, aunque cambiemos el
+valor de la variable a 10, una nueva llamada a la función lo fija
+a `y+2`.
+
 
 ## Ejercicio 12
 
@@ -376,8 +620,61 @@ otra Shell, ejecute el depurador con el programa que se está ejecutando en esto
 Utilice las órdenes de gdb para hacer que el programa que se está ejecutando se detenga en algún lugar y
 posteriormente se pueda continuar su ejecución. Escriba todos los pasos que haya realizado.**
 
+Los pasos son los siguientes
+
+```console
+$ g++ -g ejsesion10.cpp -o ej1
+$ ./ej1 &
+$ gdb
+(gdb) attach 3619
+$ kill
+```
+
 ## Ejercicio 13
 
 **Utilizando las órdenes de depuración de gdb, corrija el error del programa
 ecuacionSegundoGrado.cpp. Escriba todos los pasos que haya realizado. Pruebe a depurarlo usando attach.**
 
+Los pasos son los siguientes:
+
+```console
+$ g++ -g ecuacionSegundoGrado.cpp -o ecuacionSegundoGrado
+$ gdb ecuacionSegundoGrado
+(gdb) run
+
+Starting program: /home/ricardo/Dropbox/dgiim/FS/Prácticas/practicas-fs/ArchivosModuloII/sesion09/ecuacionSegundoGrado 
+
+Vamos a resolver una ecuacion del tipo ax2+bx+c=0
+
+Introduce el valor de a: 10
+
+Introduce el valor de b: 1
+
+Introduce el valor de c: 10
+
+La primera solucion es: -nan
+La segunda solucion es: -nan
+[Inferior 1 (process 14680) exited normally]
+$
+
+Lo cual nos muestra que calcula ecuaciones de segundo
+grado que no tienen soluciones reales.
+
+Por tanto, modificamos la línea
+
+```c++
+if (ecuacionator(a, b, c) == 0) // Ya que si el discriminante es negativo, devuelve 0
+```
+
+```console
+$ ./ecuacionSegundoGrado 
+Vamos a resolver una ecuacion del tipo ax2+bx+c=0
+
+Introduce el valor de a: 32
+
+Introduce el valor de b: 24
+
+Introduce el valor de c: 11
+
+La ecuacion no tiene solucion
+```
