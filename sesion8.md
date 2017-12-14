@@ -6,22 +6,61 @@
 nombre ejemplo1. Lance gdb con dicho ejemplo y ejecútelo dentro del depurador. Describa la información que
 ofrece.**
 
+```console
+$ g++ -g main.cpp hello.cpp factorial.cpp -o ejemplo1
+$ gdb ejemplo1
+```
+
+Dentro del intérprete
+
+```console
+(gdb) run
+
+Starting program: /home/ricardo/Dropbox/dgiim/FS/Prácticas/practicas-fs/ArchivosModuloII/sesion09/ejemplo1 
+Hello World!
+The factorial of 7 is 5040
+[Inferior 1 (process 11929) exited normally]
+```
+
+Lo cual nos indica que el programa ha terminado correctamente la ejecución.
 
 ## Ejercicio 2
 
 **Usando la orden list muestre el código del programa principal y el de la función factorial
 utilizados en el ejercicio 1 (para ello utilice la orden help list).**
 
+```GDB
+(gdb) list 1,12
+1	#include <iostream>
+2	#include "functions.h"
+3	
+4	using namespace std;
+5	
+6	int main(){
+7	    print_hello();
+8	    cout << endl;
+9	    cout << "The factorial of 7 is " << factorial(7) << endl;
+10	    return 0;
+11	}
+
+(gdb) list factorial(int) 
+1	#include "functions.h"
+2	
+3	int factorial(int n){
+4	    if(n!=1){
+5		return(n * factorial(n-1));
+6	    }
+7	    else return 1;
+8	}
+(gdb) 
+```
+
 ## Ejercicio 3
 
 **Ponga un punto de ruptura asociado a cada línea del programa fuente mainsesion09.cpp donde
 aparezca el comentario /* break */. Muestre información de todas las variables que se estén usando cada vez
 que en la depuración se detenga la ejecución. Muestre la información del contador de programa mediante $pc y el
-de la pila con $sp.
-Una vez detenidos a causa a un punto de ruptura, podremos avanzar a la siguiente instrucción del programa con la
-orden next o con step. Ambas órdenes se verán en la siguiente sesión.
-Los puntos de ruptura activos pueden verse con info breakpoints. Podemos eliminar un punto de ruptura con
-la orden delete (para mayor detalle, vea la ayuda mediante la orden help delete).**
+de la pila con $sp.**
 
 
 ## Ejercicio 4
