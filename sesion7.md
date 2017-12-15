@@ -119,7 +119,7 @@ touch) y compruebe la secuencia de instrucciones que se muestra en el terminal a
 LIB_DIR=./
 
 programa2: main2.o factorial.o hello.o libmates.a
-	g++ -L$(LIB_DIR) -o $@ $^
+	g++ -L./ -o programa2 main.o factorial.o hello.o libmates.a
 
 main2.o: main2.cpp ./includes/functions.h ./includes/mates.h 
 	g++ -I./includes -c main2.cpp
@@ -197,28 +197,28 @@ LIB_DIR= ./
 CPPFLAGS= -Wall
 
 programa2: main2.o factorial.o hello.o libmates.a
-      $(CC) -L$(LIB_DIR) -o $@ main2.o factorial.o hello.o -lmates
+      $(CC) -L$(LIB_DIR) -o $@ $^
 
 main2.o: main2.cpp
-      $(CC) -I$(INCLUDE_DIR) -c main2.cpp
+      $(CC) -I$(INCLUDE_DIR) -c $<
 
 factorial.o: factorial.cpp
-      $(CC) -I$(INCLUDE_DIR) -c factorial.cpp
+      $(CC) -I$(INCLUDE_DIR) -c $<
 
 hello.o: hello.cpp
-      $(CC) -I$(INCLUDE_DIR) -c hello.cpp
+      $(CC) -I$(INCLUDE_DIR) -c $<
 
 libmates.a: sin.o cos.o tan.o
-      ar -rvs libmates.a sin.o cos.o tan.o
+      ar -rvs libmates.a $^
 
 sin.o: sin.cpp
-      $(CC) -I$(INCLUDE_DIR) -c sin.cpp
+      $(CC) -I$(INCLUDE_DIR) -c $<
 
 cos.o: cos.cpp
-      $(CC) -I$(INCLUDE_DIR) -c cos.cpp
+      $(CC) -I$(INCLUDE_DIR) -c $<
 
 tan.o: tan.cpp
-      $(CC) -I$(INCLUDE_DIR) -c tan.cpp
+      $(CC) -I$(INCLUDE_DIR) -c $<
 clean:
       rm *.o programa2
 ```
@@ -243,27 +243,27 @@ CC=g++
 INCLUDE_DIR= ./includes
 
 # Variable que indica el directorio en donde se encuentran las bibliotecas
-LIB_DIR= ./
+LIB_DIR= ./libs
 
 #Variable que indica las opciones que se le va a pasar al compilador
 CPPFLAGS= -Wall
 
-programa2: main2.o factorial.o hello.o ./libs/libmates.a
-      $(CC) -L$(LIB_DIR) -o $@ main2.o factorial.o hello.o -lmates
+programa2: main2.o factorial.o hello.o $(LIB_DIR)/libmates.a
+      $(CC) -L$(LIB_DIR) -o $@ $^
 main2.o: main2.cpp
-      $(CC) -I$(INCLUDE_DIR) -c main2.cpp
+      $(CC) -I$(INCLUDE_DIR) -c $<
 factorial.o: factorial.cpp
-      $(CC) -I$(INCLUDE_DIR) -c factorial.cpp
+      $(CC) -I$(INCLUDE_DIR) -c $<
 hello.o: hello.cpp
-      $(CC) -I$(INCLUDE_DIR) -c hello.cpp
-libmates.a: sin.o cos.o tan.o
-      ar -rvs libmates.a sin.o cos.o tan.o
+      $(CC) -I$(INCLUDE_DIR) -c $<
+$(LIB_DIR)/libmates.a: sin.o cos.o tan.o
+      ar -rvs $@ $^
 sin.o: sin.cpp
-      $(CC) -I$(INCLUDE_DIR) -c sin.cpp
+      $(CC) -I$(INCLUDE_DIR) -c $<
 cos.o: cos.cpp
-      $(CC) -I$(INCLUDE_DIR) -c cos.cpp
+      $(CC) -I$(INCLUDE_DIR) -c $<
 tan.o: tan.cpp
-      $(CC) -I$(INCLUDE_DIR) -c tan.cpp
+      $(CC) -I$(INCLUDE_DIR) -c $<
 clean:
       rm *.o programa2
 ```
