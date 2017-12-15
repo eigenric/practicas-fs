@@ -1,5 +1,3 @@
-Ricardo Ruiz Fernández de Alba
-
 # Práctica 8: Compilación de programas
 
 ## Ejercicio 8.1
@@ -30,23 +28,30 @@ están en la biblioteca comentada.
 ejemplo anterior y, sin embargo, ¿por qué sí hemos podido generar el módulo main2.o?**
 
 En main2.cpp se utilizan las funciones `print_sin()` `print_cos()` y `print_tan()`, las cuales
-están definidas en `libmates.a`. Por ello, es necesario especificar explícitamente la
+están definidas en `libmates.a`. Por ello, es necesario enlazar explícitamente la
 biblioteca utilizada. 
 
-
+```console
 $ g++ -L./ -o programa2 main2.o factorial.o hello.o -lmates
-La opción -L permite especificar directorios en donde g++ puede buscar las bibliotecas necesarias. Por omisión
-g++ las busca en los directorios /lib y /usr/lib. Además, en el caso de –lmates, esa opción –l busca la
-biblioteca cuya raíz es mates, con prefijo lib y sufijo .a, es decir, busca la biblioteca libmates.a.
-Pruebe lo siguiente.
-$ mkdir includes
-$ mv *.h includes
+```
+
+La opción -L permite especificar directorios en donde g++ puede buscar las bibliotecas necesarias.
+Por omisión g++ las busca en los directorios `/lib` y `/usr/lib`. Además, en el caso de `–lmates`,
+esa opción `–l` busca la biblioteca cuya raíz es mates, con prefijo `lib` y sufijo
+`.a`, es decir, busca la biblioteca `libmates.a.`
 
 ## Ejercicio 8.3.
 
 **Explique por qué la orden g++ previa ha fallado. Explique los tipos de errores que ha encontrado.**
 
-La biblioteca `functions.h` no es encontrada
+Los archivos de cabecera `functions.h` y `mates.h` no son encontrados, ya que
+se encuentran ahora en el directorio `includes`. Por tanto, las funciones `print_hello`,
+`factorial`, `print_sin`, `print_cos` y `print_tan` no pueden utilizarse, pues no se
+ha enlazado correctamente. Para solucionarlo, utilizamos la opción `-I` en g++:
+
+```console
+g++ -I./includes -L./ -o programa2 main2.cpp factorial.cpp hello.cpp -lmates
+```
 
 # Ejercicio 8.4.
 
@@ -56,9 +61,48 @@ hacerlo usando la orden touch sobre uno o varios de esos archivos) y compruebe l
 que se muestra en el terminal al ejecutarse la orden make. ¿Se genera siempre la misma secuencia de órdenes
 cuando los archivos han sido modificados que cuando no? ¿A qué cree puede deberse tal comportamiento?**
 
+
+
 La orden `make` devuelve una salida distinta en función de los archivos
 que han sido modificados. Así no ejecuta todos los archivo si sólo ha cambiado
 uno de ellos.
+
+Cuando ejecutamos `make` pro primera vez
+
+```console
+$ make -f makefileE
+g++ -I./includes -c main2.cpp
+g++ -I./includes -c factorial.cpp
+g++ -I./includes -c hello.cpp
+g++ -I./includes -c sin.cpp
+g++ -I./includes -c cos.cpp
+g++ -I./includes -c tan.cpp
+ar -rvs libmates.a sin.o cos.o tan.o
+r - sin.o
+r - cos.o
+r - tan.o
+g++ -L./ -o programa2 main2.o factorial.o hello.o libmates.a
+```
+
+Ahora bien si realizamos `touch` sobre uno o varios no vacíos, se modifican su fecha y hora
+asociadas. Por tanto, `make` detecta que han sido actualizados y sólo ejecuta las órdenes
+que contienen como dependencia estos archivos:
+
+```console
+$ touch main2.cpp 
+$ make -f makefileE
+g++ -I./includes -c main2.cpp
+g++ -L./ -o programa2 main2.o factorial.o hello.o libmates.a
+$ touch hello.cpp sin.cpp
+$ make -f makefileE
+g++ -I./includes -c hello.cpp
+g++ -I./includes -c sin.cpp
+ar -rvs libmates.a sin.o cos.o tan.o
+r - sin.o
+r - cos.o
+r - tan.o
+g++ -L./ -o programa2 main2.o factorial.o hello.o libmates.a
+```
 
 ## Ejercicio 8.5.
 
