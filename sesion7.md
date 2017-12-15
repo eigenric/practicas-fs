@@ -110,7 +110,66 @@ g++ -L./ -o programa2 main2.o factorial.o hello.o libmates.a
 dependencias sobre los archivos de cabecera. Pruebe a modificar cualquier archivo de cabecera (usando la orden
 touch) y compruebe la secuencia de instrucciones que se muestra en el terminal al ejecutarse la orden make.**
 
-Es necesario agregar `./include/function.h` y el `-I./include`
+```makefile
+# Nombre archivo: makefile
+# Uso: make 
+# Descripción: Mantiene todas las dependencias entre los módulos y la biblioteca
+#              que utiliza el programa2.
+
+LIB_DIR=./
+
+programa2: main2.o factorial.o hello.o libmates.a
+	g++ -L$(LIB_DIR) -o $@ $^
+
+main2.o: main2.cpp ./includes/functions.h ./includes/mates.h 
+	g++ -I./includes -c main2.cpp
+
+factorial.o: factorial.cpp ./includes/functions.h
+	g++ -I./includes -c factorial.cpp
+
+hello.o: hello.cpp ./includes/functions.h
+	g++ -I./includes -c hello.cpp
+
+libmates.a: sin.o cos.o tan.o
+	ar -rvs libmates.a sin.o cos.o tan.o
+
+sin.o: sin.cpp ./includes/mates.h
+	g++ -I./includes -c sin.cpp
+
+cos.o: cos.cpp ./includes/mates.h
+	g++ -I./includes -c cos.cpp
+
+tan.o: tan.cpp ./includes/mates.h
+	g++ -I./includes -c tan.cpp
+
+cleanAll: cleanObj cleanLib
+	rm programa2
+
+cleanObj:
+	rm main2.o factorial.o hello.o
+
+cleanLib:
+	rm sin.o cos.o tan.o libmates.a
+```
+
+Hemos añadido  `./include/function.h` `./includes/mates.h` como
+como dependencias y `-I./include` de opción en `g++`. Por tanto, si modificamos
+algún archivo de cabecera, se ejecutan todas las órdenes del Makefile
+que lo incluyen como dependencia.
+
+```console
+$ touch includes/mates.h 
+$ make -f makefileF
+g++ -I./includes -c main2.cpp
+g++ -I./includes -c sin.cpp
+g++ -I./includes -c cos.cpp
+g++ -I./includes -c tan.cpp
+ar -rvs libmates.a sin.o cos.o tan.o
+r - sin.o
+r - cos.o
+r - tan.o
+g++ -L./ -o programa2 main2.o factorial.o hello.o libmates.a
+```
 
 ## Ejercicio 8.6.
 
