@@ -3,6 +3,9 @@
 Prácticas realizadas durante el primer curso del Doble Grado
 en Ingeniería Informática y Matemáticas (UGR).
 
+Si encuentras un fallo o quieres proponer una solución alternativa,
+puedes hacer un Issue o un Pull Request.
+
 1. [Sesión 1 - Práctica 2](sesion1.md)
 2. [Sesión 2 - Práctica 3](sesion2.md)
 3. [Sesión 3 - Práctica 4](sesion3.md)
