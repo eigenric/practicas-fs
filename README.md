@@ -11,6 +11,9 @@ en Ingeniería Informática y Matemáticas (UGR).
 6. [Sesión 6 - Práctica 7](sesion6.md)
 7. [Sesión 7 - Práctica 8](sesion7.md)
 
+# Manual básico de bash   
+Manual que plasma el contenido de las prácticas de la  asignatura:  [Manual bash](basicBash.md)
+
 
 ## Licencia
 
