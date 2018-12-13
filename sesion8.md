@@ -306,29 +306,25 @@ Num     Type           Disp Enb Address            What
 la opción -x de gdb. ¿Sabría decir qué hace este programa con la variable final2?**
 
 ```
-/* guion.gdb */
-
 break 15
 run
 info locals
 p/x $pc
-x/i $pc
+x/1 $pc
 p/x $ps
-x/i $ps
+n
 break 29
-n
 info locals
 p/x $pc
-x/i $pc
+x/1 $pc
 p/x $ps
-x/i $ps
+n
 break 42
-n
 info locals
 p/x $pc
-x/i $pc
+x/1 $pc
 p/x $ps
-x/i $ps
+n
 break 47
 delete breakpoint 2 3 4
 ```
