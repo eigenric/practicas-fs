@@ -2,14 +2,14 @@
 
 ## Instrucciones que utilizo en mi día a día
 ` find . -type f -name '*~' -delete `
-Precioso comando que elimina las copias de segurida de manera recursiva de la carperta en que estés.
+Precioso comando que elimina las copias de seguridad de manera recursiva de la carperta en que estés.
 
 ## Comandillos útiles para utilizar en terminal  
-- ` C-l` Desplazar la línea, por defecto hace que te aparezca al principio, depués medio y final.  
+- ` C-l` Desplazar la línea, por defecto hace que te aparezca al principio, después medio y final.  
 - `clear` limpiar terminal
 - Para cerrar al termial C-alt-w
 - Cerrar una ventana que no sea la terminal `C-quit` y que no se haya abierto por medio de esa
--`./ <programa> & ` lo ejecuta en "backgraund", dejando disponible la terminal
+-`./ <programa> & ` lo ejecuta en "background", dejando disponible la terminal
 - `xdg-open <archivo>` abre ese archivo con el programa predeterminado
 - `source <nombre_guión> ` ejecuta órdenes de un fichero en el shell actual, de esta manera se guardarían las variables dentro del shell  
 
@@ -20,24 +20,24 @@ Precioso comando que elimina las copias de segurida de manera recursiva de la ca
  ---		 		 | ---
  tr[option].., SET1 		 | traduce o borra caracteres :)
  awk	   		 	 | escanea patrocenes y procesa lenguajes
- ls	 	    		 | lee los directorio
+ ls	 	    		 | lee los directorios
  cd 	     			 | cambia de directorio
  ln			 	 | Crea enlaces simbólicos
- pwd      		 	 | Imprime el camino absulo del direcctorio actual   
+ pwd      		 	 | Imprime el camino absoluto del direcctorio actual   
  mkdir 	rmdir	  	 	 | rmdir -r borra si tienes también archivos dentro  
- cat     			 | lee el condtenido de un archivo  
+ cat     			 | lee el contenido de un archivo  
  mv  /<archivo1> <archivo2>	 | mueve un archivo    
  file 	   		 	 | muestra el tipo de archivo.  
  more pager  pg  	 	 | visualiza un archivo fraccionándolo en la pantalla cada vez.  
  rm   	     		         | borra DEFINITIVAMENTE un archivo/directorio
- touch				 | modifica fecha y hora de un archivo, si no los crea  
+ touch				 | modifica fecha y hora de un archivo, si no existe los crea  
  clear	 			 | borra el contenido de la terminal actual
  tail -<entero> <archivo> 	 | muestra las líneas finales de un fichero  
- head -/<entero>/ <archivo>  	 | muestras las "numero de líneas iniciales de un fichero.  
+ head -/<entero>/ <archivo>  	 | muestras las "numero de líneas iniciales" de un fichero.  
   sort <archivo>   		 | ordena bajo un critero elegido las líneas de un archivo.  
  wc    				 | cuenta el número de algo de un fichero 
- chmod [ugoa][+-=][rwx]dir/file  | Cambio a los permisos de un archivo o direcctorio	 
-  echo				 | escribe un mensaje en termminal  
+ chmod [ugoa][+-=][rwx]dir/file  | Cambio a los permisos de un archivo o directorio	 
+  echo				 | escribe un mensaje en terminal  
  `alias <nombre>='<ódener>' `	 | Definir comportamiento de una orden, sin argumentos, ves los alias creados
  `unalias 		    	 | Borrar un alias
  `\alias`			 | Para ignorar un alias y ejecutar la orden original
@@ -53,16 +53,16 @@ Precioso comando que elimina las copias de segurida de manera recursiva de la ca
   - %f  número en coma flotante  
   - %q entrecomilla una cadena  
   - %s muestra una cadena sin entrecomillar  
-  - %x núemero en hexadecimal  
+  - %x número en hexadecimal  
   - %o número en octal
 ```
 - Ejemplo: 
 ```bash
-blanca@debian:$printf "Quededan %i semanas para fin año \n" $( expr $DIFERENCIA / 7)
-Quededan 10 semanas para fin año 
+blanca@debian:$printf "Quedan %i semanas para fin año \n" $( expr $DIFERENCIA / 7)
+Quedan 10 semanas para fin año 
 ```
 ### Alias permanentes 
-Los alias declaradas  por terminal son temporales,  se borrarán al cerrarla. Para hacerlos permanentes bastará con abrir ( en caso de no existir crear) el documento `.bashrc` que se encuentra en el direcctorio \home de su usuario y allí escribir el alias.
+Los alias declaradas  por terminal son temporales,  se borrarán al cerrarla. Para hacerlos permanentes bastará con abrir ( en caso de no existir crear) el documento `.bashrc` que se encuentra en el direcctorio `\home` de su usuario y allí escribir el alias.
 Al guardar y salir del documento hacer un `. .bashrc` en la terminal  
 
  
@@ -80,7 +80,7 @@ Al guardar y salir del documento hacer un `. .bashrc` en la terminal
  []		| Designan un carácter o rango de caracteres que representan un carácter simple	  | `tema[1-3].pdf`
  {}		| Sustituyen conjuntos de palabras separadas por comas con  partes comunes	  | npi
  ~		| Abrevia el campo absoluto del directorio home	       	    	   		  | `~\Documento`  
- \< nombre	| redireciciona la entrada de una orden obtenida del ARCHIVO nombre		  | `cat < text.txt`
+ \< nombre	| redirecciona la entrada de una orden obtenida del ARCHIVO nombre		  | `cat < text.txt`
  \> nombre	| Redirige la salida de una orden para que la escriba en el nuevo archivo nombre  | `echo "aaa" > text.txt `
  &> nombre 	| La salida estándar se combina con la salida de error estándar estritas en nombre| idem
  \>\> nombre	| Igual que *>* añadiendo al final del archivo si existe		    	  | idem
@@ -89,23 +89,23 @@ Al guardar y salir del documento hacer un `. .bashrc` en la terminal
  `| ` 	| Para crear cauces SÚPER ÚTIL							  | `cat text | grep -e ^[A-B]`
  `|& `	| Cauce con errores 	  							  | similar  
  ;   		| Separador entre órdenes que se ejecutan					  | ` cat archivo ; echo "aaa"`
- ()		| Aislar órdenes, siendo trada como una única					  | --
- &&		| La orde siguiente se ejecuta si la anterior ha tenido éxito			  | aa
- \|\| 		| La orden siguiente se ejecuta sólo si la anterior no ha funcionadp		  | `ls -l notas || pwd`  
+ ()		| Aislar órdenes, siendo tratada como una única					  | --
+ &&		| La orden siguiente se ejecuta si la anterior ha tenido éxito			  | aa
+ \|\| 		| La orden siguiente se ejecuta sólo si la anterior no ha funcionado		  | `ls -l notas || pwd`  
 
 ## Variables  
 ### Variables de paths
-Nombre			| Utiliadad
+Nombre			| Utilidad
 ---			| ---  
 $BASH       		|  contiene la ruta de acceso del terminal
-$HOME			| alamacena el directorio raís de la carpeta home
+$HOME			| almacena el directorio raíz de la carpeta home
 $PATH			| guarda el camino local de las órdenes
 $? 			| contiene el código de retorno hacia la última orden o guión
 
 ### vecotres o estring  
 Comando | utilidad | ejemplo 
 --- |--- |---
-` VECTOR=( ALGO ALGO ... )` | Para declarlos parenetesis con elementos separados por espacios |` num=(uno dos tres)`
+` VECTOR=( ALGO ALGO ... )` | Para declarlos paréntesis con elementos separados por espacios |` num=(uno dos tres)`
 `$ {VECTOR[*]} ` ` ${VECTOR[@]} `    | Hacer referencia a todo el contenido                   | `echo ${num[*]}; uno dos tres` 
 `$ {#VECTOR[*]} ` ` ${#VECTOR[@]} `  | Devuelve la longitud del vector 			      | `echo ${#num[@]} ; 3 `
 
@@ -126,10 +126,10 @@ info bash y hartate información
   `declare -[i,s,a] <nombre>`	| declara variables 
   `declare -p <nombre>	| Ver el contenido de una variable  
   `export <variable>`		| para que el sistema la reconozca 
-  \` orden \`			| Sustitución de orden como si guera un avariable  
+  \` orden \`			| Sustitución de orden como si fuera un avariable  
   `$(orden) `			| Sustitución de orden como si fuera una variable  
   `expre <operación>`		| Permite operaciones con variables ```numero=`expr $numero + 1` ```
-  ` $(( expresión )) `	| Evalua expresiones aritméticas y sustituye su valor, LOS ESPACIOS CUÍDAMELOS  
+  ` $(( expresión )) `	| Evalúa expresiones aritméticas y sustituye su valor, LOS ESPACIOS CUÍDAMELOS  
   ` $[ expresión ] ` 		| Evalua expresiones aritméticas y sustituye su valor
   `operaciones | bc -l `	| Permite operaciones con decimales <3  
   `let varInt=asignación`	| Asigna valor a una variable entera SIN ESPACIO EN BLANCO `let a='a +   4'`  o `let a=a+4`
@@ -141,7 +141,7 @@ info bash y hartate información
 
  Argumento  	   | Descripción 
  --- 	   	   | ---
- `$0 `	  	   | Nombre del scrips que se llama 
+ `$0 `	  	   | Nombre del scripts que se llama 
  `$1..$9 ${10}..`  | Referencia a distintos argumentos  
  `$@ $* ` 	   | Todos los argumentos que se le han pasado  
  `$#`		   | Número de argumentos que se le han pasado 
@@ -153,7 +153,7 @@ info bash y hartate información
 ### test 
   Operador    	      | Función							 | Ejemplo  
   --- 	   	      | ---     						 | ---
-  `test <expresión>`  | Comprobación de características de archivos y directorio | `test -x cat && echo “true” || echo “false”`  
+  `test <expresión>`  | Comprobación de características de archivos y directorios | `test -x cat && echo “true” || echo “false”`  
   
 #### Empresiones útiles  
 
@@ -184,7 +184,7 @@ Repite una secuencia, por ejemplo imaginemos que queremos contar del 1 hasta el 
  `for n in \`seq 1 1 10\` `  es equivalente también `for n in {1..10}` 
 Puedes trabajar también con otras órdenes `for i in $(ls)`
 
-O podemos hacer un bule for al estilo c  
+O podemos hacer un bucle for al estilo c  
 ``` bash 
 for (( i=0 ; i<$2 ; i++ ))
 do
@@ -210,7 +210,7 @@ done
  `bash -x`  `set -x`	  | Igual que -v pero con todas las sustituciones y expansiones realizadas
 
 #### Orden trap 
-Traza,especifica una acción a reaizar cada vez que recive una señal (mecanismos de comunicación entre distintos procesos en linux <3) 
+Traza, especifica una acción a reaizar cada vez que recibe una señal (mecanismos de comunicación entre distintos procesos en linux <3) 
 colocar después del #!/bin/bash   
 trap <lo que quieras que haga tras cada ejecución de una línea> DEBUG  
 DEBUG  es un tipo de señal, como también lo son EXIT , ERR ,  RETURN  
@@ -254,7 +254,7 @@ top	| Muestra los procesos en ejecución con actualización de su información e
 ### Compilación con g++  
 #### Procesos de la compilación
 1. **Procesar** procesador acepta como entrada un archivo con código fuente, elimina los comentarios e interpreta las **directivas de procesamiento**  
-2. **Compilador** analiza el código fuente y lo traduce a un código objeto, **módulo objeto** con la extensión `.o`, en este porceso no se resuelven las referencias externa a variable o funciones.  
+2. **Compilador** analiza el código fuente y lo traduce a un código objeto, **módulo objeto** con la extensión `.o`, en este proceso no se resuelven las referencias externas a variable o funciones.  
 `g++ -c archivo.cpp` genera si no hay errores de programación el módulo objeto.  
 3. **Enlazador** resuelve las referencias externas y genera un archivo ejecutable.  
 
@@ -264,10 +264,10 @@ top	| Muestra los procesos en ejecución con actualización de su información e
  ---		       	       	 | --- 
  `g++ -o archivo.cpp`  	       	 | Realiza etapa de procesado y compilación generando módulo objeto si no hay error 
  `g++ archivo.o ach.o` 	       	 | Crea el ejutable, a.out 
- `g++ -o nom_ejecuta archivo.o`  | Igual que el anterior pero en vex de nombrar al archivo con a.out, lo nombra nom_ejecuta.out 
+ `g++ -o nom_ejecuta archivo.o`  | Igual que el anterior pero en vez de nombrar al archivo con a.out, lo nombra nom_ejecuta.out 
  `ar -rvs biblio.a modulo.o mod.o`| Genera una librería <br>genera un archivo .a <br>> r inserta los miembros del archivo, s crea índice, v amplia información en verbose 
 `g++ -I ACHIVO.CPP` 	    	 | Permite especificar archivos en los que la orden g++ busca en la cabecera, por defecto busca en *usr/include*<br> esta orden no tiene sentdo si todos los archivos se encuentra en el directorio donde se ejecutan las órdenes
-`$ g++ -L ./ -o programa2 main2.o factorial.o hello.o -lmates` | crea ejecutable especificando las librerias con la raiz mates, esta se debe encontra en el direcorio  
+`$ g++ -L ./ -o programa2 main2.o factorial.o hello.o -lmates` | crea ejecutable especificando las librerias con la raiz mates, esta se debe encontrar en el direcorio  
 `g++ -I./directorio -L./ -o programa2 main2.cpp factorial.cpp hello.cpp -lmates` | igual que la anterior pero especificando el directorio  
 
 
@@ -323,7 +323,7 @@ Ejecutar la orde especial `.POTHY: clean` todas las dependedias que contengan es
 #### Variable predefinidas en el uso de make 
 
 `make -p` nos muestra las variable predefinidas, dejo las más interesantes 
-> Hay que hecharle un ratillo para leerlo enter y comprenderlo
+> Hay que echarle un ratillo para leerlo entero y comprenderlo
 
 Variable  | Significado 
 --- 	  | --- 
@@ -354,7 +354,7 @@ print: $(SRCS)
 programa1: $(OBJS)  
         $(CC) -c $@ $^       % $^ representaría la secuencia  main.o factorial.o hello.o  
 ```  
-Además se puede uno ahorra escribir de la siguiente manera `$(Nombre:TextoActual=TextoNuevo) `   
+Además se puede uno ahorrar escribir de la siguiente manera `$(Nombre:TextoActual=TextoNuevo) `   
 Ejemplo:  
 ```
 SRCS = main.cpp factorial.cpp hello.cpp  
